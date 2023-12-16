@@ -13,7 +13,6 @@ import java.util.Collections;
 import java.util.List;
 
 
-
 public class StudentDatabaseGUI extends JFrame {
     public class BackgroundPanel extends JPanel {
         private Image backgroundImage;
@@ -353,7 +352,7 @@ public class StudentDatabaseGUI extends JFrame {
     }
 
 
-
+    //添加新学生
     private void showAddStudentDialog() {
         JTextField studentIdField = new JTextField();
         JTextField nameField = new JTextField();
@@ -376,20 +375,16 @@ public class StudentDatabaseGUI extends JFrame {
         panel.add(new JLabel("英语成绩:"));
         panel.add(englishScoreField);
 
-        // 添加平均分和排名字段
-        //panel.add(new JLabel("平均分:"));
-        //JTextField averageScoreField = new JTextField();
-        //averageScoreField.setEditable(false);
-        //panel.add(averageScoreField);
-
-        //panel.add(new JLabel("排名:"));
-        //JTextField rankField = new JTextField();
-        //rankField.setEditable(false);
-        //panel.add(rankField);
-
         int result = JOptionPane.showConfirmDialog(null, panel, "添加新学生", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
-            // 获取用户输入的信息
+            // 验证用户输入
+            if (isEmpty(studentIdField) || isEmpty(nameField) || isEmpty(classNameField)
+                    || isEmpty(chineseScoreField) || isEmpty(mathScoreField) || isEmpty(englishScoreField)) {
+                JOptionPane.showMessageDialog(null, "请填写所有信息！", "输入不完整", JOptionPane.ERROR_MESSAGE);
+                return; // 不完整时退出方法，不添加学生
+            }
+
+            // 获取用户输入
             String studentId = studentIdField.getText();
             String name = nameField.getText();
             String className = classNameField.getText();
@@ -406,13 +401,20 @@ public class StudentDatabaseGUI extends JFrame {
             newStudent.setMathScore(mathScore);
             newStudent.setEnglishScore(englishScore);
 
-            // 插入新学生到数据库
+            // 将新学生插入到数据库
             database.insertStudent(newStudent);
 
             // 弹出提示框，表示添加成功
             JOptionPane.showMessageDialog(null, "新学生添加成功！");
         }
     }
+
+    // 辅助方法，检查文本字段是否为空
+    private boolean isEmpty(JTextField textField) {
+        return textField.getText().trim().isEmpty();
+    }
+
+
     private void batchAddStudents() {
         JFileChooser fileChooser = new JFileChooser();
         int result = fileChooser.showOpenDialog(null);
