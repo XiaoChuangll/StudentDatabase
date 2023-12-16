@@ -339,13 +339,19 @@ public class StudentDatabaseGUI extends JFrame {
             // 获取用户输入的学生学号
             String studentIdToDelete = studentIdField.getText();
 
-            // 删除学生
-            database.deleteStudent(studentIdToDelete);
+            // 尝试删除学生
+            boolean deletionSuccessful = database.deleteStudent(studentIdToDelete);
 
-            // 更新显示
-            updateOutput(database.getStudents());
+            if (deletionSuccessful) {
+                // 更新显示
+                updateOutput(database.getStudents());
+            } else {
+                // 删除失败，显示提示对话框
+                JOptionPane.showMessageDialog(null, "删除学生失败，可能是学号不存在或其他原因。请检查输入并重试。", "删除失败", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
+
 
 
     private void showAddStudentDialog() {

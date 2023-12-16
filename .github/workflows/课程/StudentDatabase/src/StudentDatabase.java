@@ -189,10 +189,11 @@ public class StudentDatabase {
     }
 
     // 删除学生信息
-    public void deleteStudent(String studentId) {
+    public boolean deleteStudent(String studentId) {
         students.removeIf(student -> student.getStudentId().equals(studentId));
         saveDataToFile();
         saveToUndoStack();
+        return false;
     }
 
     // 更新学生信息
