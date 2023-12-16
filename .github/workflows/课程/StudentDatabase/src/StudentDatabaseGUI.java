@@ -442,26 +442,33 @@ public class StudentDatabaseGUI extends JFrame {
     }
 
     private void updateOutput(List<Student> students) {
-        // 清空表格数据
-        tableModel.setRowCount(0);
+    // 清空表格数据
+    tableModel.setRowCount(0);
 
-        // 更新表格数据
-        for (int i = 0; i < students.size(); i++) {
-            Student student = students.get(i);
-            student.calculateAverageScore(); // 计算平均分
+    // 更新表格数据
+    for (int i = 0; i < students.size(); i++) {
+        Student student = students.get(i);
+        student.calculateAverageScore(); // 计算平均分
 
-            Object[] rowData = {
-                    student.getStudentId(),
-                    student.getName(),
-                    student.getClassName(),
-                    student.getChineseScore(),
-                    student.getMathScore(),
-                    student.getEnglishScore(),
-                    String.format("%.2f", student.getAverageScore()) // 格式化为两位小数的平均分
-            };
-            tableModel.addRow(rowData);
-        }
+        Object[] rowData = {
+                student.getStudentId(),
+                student.getName(),
+                student.getClassName(),
+                student.getChineseScore(),
+                student.getMathScore(),
+                student.getEnglishScore(),
+                String.format("%.2f", student.getAverageScore()) // 格式化为两位小数的平均分
+        };
+        tableModel.addRow(rowData);
     }
+
+    // 设置表格单元格不可编辑
+    for (int i = 0; i < outputTable.getColumnCount(); i++) {
+        Class<?> columnClass = outputTable.getColumnClass(i);
+        outputTable.setDefaultEditor(columnClass, null);
+    }
+}
+
 
 
 
