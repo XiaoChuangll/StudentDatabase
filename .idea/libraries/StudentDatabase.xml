@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="StudentDatabase">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/.github/workflows/课程/StudentDatabase/StudentDatabase.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -17,18 +17,23 @@ public class StudentDatabaseGUI extends JFrame {
     public class BackgroundPanel extends JPanel {
         private Image backgroundImage;
 
+        // 构造函数，接收背景图像路径作为参数
         public BackgroundPanel(String imagePath) {
+            // 通过图像路径创建 ImageIcon，并获取其 Image 对象
             backgroundImage = new ImageIcon(imagePath).getImage();
         }
 
+        // 覆盖父类的 paintComponent 方法以绘制背景图像
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
+
+            // 将背景图像绘制在面板上，填满整个面板
             g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
         }
     }
-    private StudentDatabase database;
 
+    private StudentDatabase database;
     private JTextField keywordField;
     private JTextField fieldField;
     private JTextArea JTable;
@@ -36,17 +41,25 @@ public class StudentDatabaseGUI extends JFrame {
     private DefaultTableModel tableModel;
 
     public StudentDatabaseGUI() {
+
         this.database = new StudentDatabase();
 
+        // 设置窗口标题为"学生数据库管理系统"
         setTitle("学生数据库管理系统");
+
+        // 设置窗口大小为570x450像素
         setSize(570, 450);
+
+        // 设置窗口关闭操作为退出应用程序
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 
         // 创建组件
         keywordField = new JTextField();
         fieldField = new JTextField();
         JTable = new JTextArea();
-// 在构造函数或初始化方法中
+
+        // 在构造函数或初始化方法中
         JTable.setEditable(false);
         JButton queryButton = new JButton("查询信息");
         JButton sortButton = new JButton("排序学生信息");
@@ -56,6 +69,7 @@ public class StudentDatabaseGUI extends JFrame {
         JButton updateButton = new JButton("更新学生信息");
         JButton clearButton = new JButton("清屏");
         JButton undoButton = new JButton("撤销");
+
         // 设置布局
         setLayout(new BorderLayout());
 
@@ -67,10 +81,15 @@ public class StudentDatabaseGUI extends JFrame {
         inputPanel.add(new JLabel("查询字段:"));
         inputPanel.add(fieldComboBox);
 
+        // 将inputPanel添加到布局的北部（上方）
         add(inputPanel, BorderLayout.NORTH);
-        add(new JScrollPane(JTable), BorderLayout.CENTER);
+        // 创建一个JTable，并将其放入JScrollPane中，然后将JScrollPane添加到布局的中央
+        add(new JScrollPane(new JTable()), BorderLayout.CENTER);
 
+
+        // 创建一个面板用于存放按钮
         JPanel buttonPanel = new JPanel();
+        // 将面板的布局设置为2行2列的网格布局
         buttonPanel.setLayout(new GridLayout(2, 2));
 
         buttonPanel.add(queryButton); // 查询按钮，用于执行学生信息查询操作
@@ -86,26 +105,28 @@ public class StudentDatabaseGUI extends JFrame {
         outputTable = new JTable(tableModel);
         outputTable.setAutoCreateRowSorter(true); // 允许行排序
 
-// 设置表头
+        // 设置表头
         String[] columnNames = {"学号", "姓名", "班级", "语文", "数学", "英语", "平均分"};
         tableModel.setColumnIdentifiers(columnNames);
 
-// 使用滚动窗格包装表格，以便显示滚动条
+        // 使用滚动窗格包装表格，以便显示滚动条
         add(new JScrollPane(outputTable), BorderLayout.CENTER);
 
         // 添加事件监听器
+
         updateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // 显示更新学生信息对话框，并添加查询功能
                 showUpdateStudentDialogWithQuery();
             }
-
             private void showUpdateStudentDialogWithQuery() {
 
             }
         });
+
         // 为查询按钮添加事件监听器
+
         queryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -115,7 +136,9 @@ public class StudentDatabaseGUI extends JFrame {
                 updateOutput(result);
             }
         });
+
         // 撤销按钮事件监听器
+
         undoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -123,18 +146,18 @@ public class StudentDatabaseGUI extends JFrame {
                 updateOutput(database.getStudents());
             }
         });
+
         // 为删除按钮添加事件监听器
+
         clearButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // 清空JTextArea
                 JTable.setText("");
-
                 // 清空JTable的内容
                 tableModel.setRowCount(0);
             }
         });
-
 
         deleteButton.addActionListener(new ActionListener() {
             @Override
@@ -144,25 +167,31 @@ public class StudentDatabaseGUI extends JFrame {
             }
         });
 
-// 为更新按钮添加事件监听器
-
+        // 为更新按钮添加事件监听器
         updateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // 显示更新学生信息对话框
-
             }
         });
+
+        // 为查询按钮添加动作监听器
         queryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // 获取关键字和字段输入框的文本内容
                 String keyword = keywordField.getText();
                 String field = fieldField.getText();
+
+                // 调用数据库查询方法，获取查询结果
                 List<Student> result = database.queryStudents(keyword, field);
 
+                // 更新输出区域显示查询结果
                 updateOutput(result);
             }
         });
+
+
         //排序功能
         sortButton.addActionListener(new ActionListener() {
             @Override
@@ -200,32 +229,39 @@ public class StudentDatabaseGUI extends JFrame {
             }
         });
 
-
+        // 为添加按钮添加动作监听器
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // 显示添加新学生的对话框
+                // 执行动作：显示添加新学生的对话框
                 showAddStudentDialog();
             }
         });
 
+
+        // 为批量添加按钮添加动作监听器
         batchAddButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // 执行批量添加新学生的操作
+                // 执行动作：执行批量添加新学生的操作
                 batchAddStudents();
             }
         });
+
+
+        // 为更新按钮添加动作监听器
         updateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // 显示查询学生信息对话框
+                // 执行动作：显示查询学生信息对话框
                 showQueryStudentDialog();
             }
         });
+
     }
 
 
+    //查询即将要更新学生的方法
     private void showQueryStudentDialog() {
         JTextField queryNameField = new JTextField();
 
@@ -250,6 +286,8 @@ public class StudentDatabaseGUI extends JFrame {
         }
     }
 
+
+    //更新学生的方法
     private void showUpdateStudentDialog(Student studentToUpdate) {
         // 使用 studentToUpdate 对象初始化更新学生信息的输入框
 
@@ -280,6 +318,7 @@ public class StudentDatabaseGUI extends JFrame {
         averageScoreField.setEditable(false);
         panel.add(averageScoreField);
 
+        //不想用这个功能，所以注释掉
         /*
         panel.add(new JLabel("排名:"));
         JTextField rankField = new JTextField();
@@ -310,6 +349,8 @@ public class StudentDatabaseGUI extends JFrame {
             double averageScore = (updatedStudent.getChineseScore() + updatedStudent.getMathScore() + updatedStudent.getEnglishScore()) / 3.0;
             int rank = database.calculateRank(updatedStudent);
 
+
+            //不想用这个功能，所以注释掉
             //averageScoreField.setText(String.format("%.2f", averageScore));
             //rankField.setText(String.valueOf(rank));
 
@@ -323,9 +364,7 @@ public class StudentDatabaseGUI extends JFrame {
 
 
 
-
-
-
+    //删除学生的方法
     private void showDeleteStudentDialog() {
         JTextField studentIdField = new JTextField();
 
@@ -414,40 +453,67 @@ public class StudentDatabaseGUI extends JFrame {
         return textField.getText().trim().isEmpty();
     }
 
-
+    //批量添加学生数据的方法
     private void batchAddStudents() {
+        // 创建文件选择器
         JFileChooser fileChooser = new JFileChooser();
+
+        // 显示文件选择对话框，并获取用户的选择结果
         int result = fileChooser.showOpenDialog(null);
+
+        // 如果用户选择了文件
         if (result == JFileChooser.APPROVE_OPTION) {
+            // 获取用户选择的文件
             File selectedFile = fileChooser.getSelectedFile();
+
             try {
+                // 从文件中读取学生信息列表
                 List<Student> students = readStudentsFromFile(selectedFile);
+
+                // 将学生信息插入到数据库中
                 database.insertStudents(students);
-                updateOutput(Collections.emptyList()); // 传递一个空列表
+
+                // 更新输出，传递一个空列表
+                updateOutput(Collections.emptyList());
             } catch (IOException ex) {
+                // 捕捉并显示读取文件时出现的错误
                 JOptionPane.showMessageDialog(null, "读取文件时出错：" + ex.getMessage());
             }
         }
     }
 
     private List<Student> readStudentsFromFile(File file) throws IOException {
+        // 创建一个列表以存储学生对象
         List<Student> students = new ArrayList<>();
+
+        // 使用try-with-resources自动关闭BufferedReader
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
+
+            // 从文件中读取每一行
             while ((line = reader.readLine()) != null) {
+                // 使用逗号作为分隔符将行分割成部分
                 String[] parts = line.split(",");
+
+                // 创建一个新的Student对象
                 Student student = new Student();
+
+                // 使用从行中提取的部分设置学生的属性
                 student.setStudentId(parts[0]);
                 student.setName(parts[1]);
                 student.setClassName(parts[2]);
                 student.setChineseScore(Integer.parseInt(parts[3]));
                 student.setMathScore(Integer.parseInt(parts[4]));
                 student.setEnglishScore(Integer.parseInt(parts[5]));
+
+                // 将Student对象添加到列表中
                 students.add(student);
             }
         }
+        // 返回学生对象的列表
         return students;
     }
+
 
     private void updateOutput(List<Student> students) {
     // 清空表格数据
@@ -478,14 +544,12 @@ public class StudentDatabaseGUI extends JFrame {
 }
 
 
-
-
     public static void main(String[] args) {
         try {
-            // 设置外观为FlatDarkLaf，您也可以选择使用FlatLightLaf等其他FlatLaf的变体
+            // 设置外观为FlatDarkLaf
             UIManager.setLookAndFeel(new FlatDarkLaf());
 
-            // 如果你想在Windows上模拟MacOS系统的外观，可以添加以下代码
+            // Windows上模拟MacOS系统的外观
             UIManager.getLookAndFeelDefaults().put("Button.showMnemonics", Boolean.TRUE);
             UIManager.getLookAndFeelDefaults().put("Button.defaultButtonFollowsFocus", Boolean.TRUE);
             UIManager.getLookAndFeelDefaults().put("Component.focusWidth", 2);
@@ -495,7 +559,9 @@ public class StudentDatabaseGUI extends JFrame {
         }
 
         SwingUtilities.invokeLater(() -> {
+            // 创建学生数据库GUI对象
             StudentDatabaseGUI gui = new StudentDatabaseGUI();
+            // 设置GUI可见
             gui.setVisible(true);
         });
     }
