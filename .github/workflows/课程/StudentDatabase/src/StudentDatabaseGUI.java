@@ -543,7 +543,6 @@ public class StudentDatabaseGUI extends JFrame {
     }
 }
 
-
     public static void main(String[] args) {
         try {
             // 设置外观为FlatDarkLaf
