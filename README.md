@@ -1,3 +1,4 @@
+
 # 学生成绩信息管理系统
 
 ## 简介
@@ -30,7 +31,10 @@
 ## 贡献
 欢迎提交 issues 和 pull requests 来改进此项目。
 
-加入我们
+## 许可证
+该项目使用 MIT 许可证，详情请参阅 [LICENSE](LICENSE) 文件。
 
-欢迎加入我们的QQ群一起交流与优化：
-点击加入QQ群
+## 欢迎加入
+欢迎加入我们的QQ群聊，一起交流和优化该项目：
+[加入QQ群聊](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=Ch7FS2Jd9XICLmQJjZEYt9XG8PtsGNNY&authKey=2sbNKX2WqzoFcn%2FipMSW70uCb1LHZCmltko%2FmkxkE3Rhv8o6b%2FFWHhhPJiKM9Yt8&noverify=0&group_code=1075395016)
+```
