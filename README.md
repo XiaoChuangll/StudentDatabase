@@ -1,3 +1,5 @@
+
+```markdown
 # 学生成绩信息管理系统
 
 ## 简介
@@ -23,3 +25,15 @@
 1. 克隆仓库：
    ```bash
    git clone https://github.com/YourUsername/StudentDatabase.git
+   ```
+2. 导入项目到您的Java IDE中。
+3. 编译并运行 `Main.java` 文件。
+
+## 贡献
+欢迎提交 issues 和 pull requests 来改进此项目。
+
+## 许可证
+该项目使用 MIT 许可证，详情请参阅 [LICENSE](LICENSE) 文件。
+```
+
+这样编写的 README.md 包含了简介、功能列表、使用指南、安装与运行说明、贡献方式和许可证信息，与 "femas" 仓库的 README.md 风格一致。
